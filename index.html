@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Coinstep</title>
+<meta name="description" content="Walk the real world and catch bronze, silver and gold coins.">
+<meta name="theme-color" content="#0d2a26">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Coinstep">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Figtree:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="map"></div>
+
+<header id="top" hidden>
+  <div class="wallet" aria-label="Your coins">
+    <span class="tally"><i class="dot bronze"></i><b id="bronzeCount">0</b></span>
+    <span class="tally"><i class="dot silver"></i><b id="silverCount">0</b></span>
+    <span class="tally"><i class="dot gold"></i><b id="goldCount">0</b></span>
+  </div>
+  <div class="level">
+    <span>Lv <b id="level">1</b></span>
+    <div class="bar"><i id="levelFill"></i></div>
+  </div>
+  <p id="status"></p>
+</header>
+
+<div id="demoPad" hidden aria-label="Demo walking controls">
+  <button id="padUp" data-dir="up" aria-label="Walk north">▲</button>
+  <button id="padLeft" data-dir="left" aria-label="Walk west">◀</button>
+  <button id="padRight" data-dir="right" aria-label="Walk east">▶</button>
+  <button id="padDown" data-dir="down" aria-label="Walk south">▼</button>
+</div>
+
+<footer id="bottom" hidden>
+  <p id="nearest"></p>
+  <div class="steps">
+    <div>
+      <strong id="stepCount">0</strong>
+      <span>steps today</span>
+    </div>
+    <div class="goal">
+      <span id="goalLabel"></span>
+      <div class="bar"><i id="goalFill"></i></div>
+      <span id="stepSource"></span>
+    </div>
+  </div>
+  <nav>
+    <button id="magnetBtn"><b id="magnetCount">0</b><span id="magnetLabel">Magnet</span></button>
+    <button id="chestBtn"><b id="chestProgress">0%</b><span id="chestLabel">Chest</span></button>
+    <button id="ledgerBtn"><b id="totalValue">0</b><span>Ledger</span></button>
+  </nav>
+</footer>
+
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<section id="start" class="sheet">
+  <div class="start-inner">
+    <div class="start-coin" aria-hidden="true"><span>25</span></div>
+    <h1>Coinstep</h1>
+    <p>Coins are scattered across the streets around you. Walk to one, then tap it to catch it. Bronze is common, silver is harder, and gold is rare.</p>
+    <ul>
+      <li>Your location finds coins near you and stays on this phone.</li>
+      <li>Your steps charge magnets and open chests.</li>
+      <li>Keep the app open while you walk. The screen stays on for you.</li>
+    </ul>
+    <button id="startBtn" class="primary">Start walking</button>
+    <button id="demoBtn" class="quiet">Try the demo walk</button>
+    <p id="startMessage" role="alert" hidden></p>
+  </div>
+</section>
+
+<section id="catch" class="sheet" hidden>
+  <h2 id="catchTitle"></h2>
+  <p id="catchHint">Tap when the marker crosses the bright arc</p>
+  <canvas id="catchCanvas" width="640" height="640" aria-label="Catch the coin. Tap when the marker is on the arc."></canvas>
+  <p id="catchTries"></p>
+  <button id="catchLeave" class="quiet">Leave it</button>
+</section>
+
+<section id="ledger" class="sheet" hidden>
+  <div class="ledger-inner">
+    <h2>Ledger</h2>
+    <dl id="ledgerStats"></dl>
+    <h3>Last 7 days</h3>
+    <table>
+      <thead><tr><th scope="col">Day</th><th scope="col">Steps</th></tr></thead>
+      <tbody id="ledgerDays"></tbody>
+    </table>
+    <button id="ledgerClose" class="primary">Back to the map</button>
+  </div>
+</section>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="world.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
